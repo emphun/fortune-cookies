@@ -371,13 +371,13 @@
 
     // ── New party / reset ──
     let undoTimer = null;
-    let undoSeconds = 15;
+    let undoSeconds = 5;
     let pendingReset = false;
 
     function startNewParty() {
       if (pendingReset) return;
       pendingReset = true;
-      undoSeconds = 15;
+      undoSeconds = 5;
       const bar = document.getElementById('undoBar');
       const countdown = document.getElementById('undoCountdown');
       bar.classList.add('active');
