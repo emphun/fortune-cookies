@@ -517,7 +517,7 @@
       try {
         const compressedPhoto = await compressImage(photoDataUrl);
         const photoUrl = await uploadToStorage(compressedPhoto);
-        await fetch(`${SUPABASE_URL}/rest/v1/cookies`, {
+        await fetch(`${SUPABASE_URL}/rest/v1/fortune-cookies`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
