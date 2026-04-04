@@ -1,4 +1,4 @@
-# 🍪 Cookie Fortune
+# 🍪 fortune cookies
 
 A live, real-time web app built for a birthday cookie decorating party — and designed to be reused for any gathering.
 
