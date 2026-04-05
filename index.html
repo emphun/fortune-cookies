@@ -506,7 +506,7 @@
             'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
             'Prefer': 'return=minimal'
           },
-          body: JSON.stringify({ creator_name: creatorName, name, description: desc || null, photo_url: compressedPhoto, fortune, created_at: new Date().toISOString() })
+          body: JSON.stringify({ creator_name: creatorName, name, description: desc || null, photo_url: compressedPhoto, fortune: fortune, created_at: new Date().toISOString() })
         });
       } catch(e) { console.error(e); }
 
