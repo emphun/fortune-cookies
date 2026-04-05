@@ -321,7 +321,7 @@
 
     async function fetchCookies() {
       try {
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/cookies?select=*&order=created_at.asc`, {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/fortune-cookies?select=*&order=created_at.asc`, {
           headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
         });
         const cookies = await res.json();
@@ -403,7 +403,7 @@
       document.getElementById('undoBar').classList.remove('active');
       pendingReset = false;
       try {
-        await fetch(`${SUPABASE_URL}/rest/v1/cookies?id=gt.0`, {
+        await fetch(`${SUPABASE_URL}/rest/v1/fortune-cookies?id=gt.0`, {
           method: 'DELETE',
           headers: {
             'apikey': SUPABASE_SERVICE_KEY,
