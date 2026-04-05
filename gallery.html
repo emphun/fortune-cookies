@@ -17,254 +17,59 @@
       --ink-soft: #7c6889;
       --red: #e05a5a;
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
     * { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E🍪%3C/text%3E%3C/svg%3E") 8 8, auto; }
-
-    body {
-      background: var(--cream);
-      min-height: 100vh;
-      font-family: 'Nunito', sans-serif;
-      color: var(--ink);
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 70% 50% at 10% 20%, rgba(200,168,216,0.18) 0%, transparent 65%),
-        radial-gradient(ellipse 50% 60% at 90% 80%, rgba(200,168,216,0.13) 0%, transparent 65%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Nav */
-    .nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      padding: 1rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      z-index: 100;
-      background: rgba(253,250,255,0.88);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(200,168,216,0.18);
-    }
-
-    .nav-title {
-      font-family: 'Lora', serif;
-      font-size: 1.05rem;
-      font-style: italic;
-      color: var(--ink);
-    }
-
+    body { background: var(--cream); min-height: 100vh; font-family: 'Nunito', sans-serif; color: var(--ink); }
+    body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(ellipse 70% 50% at 10% 20%, rgba(200,168,216,0.18) 0%, transparent 65%), radial-gradient(ellipse 50% 60% at 90% 80%, rgba(200,168,216,0.13) 0%, transparent 65%); pointer-events: none; z-index: 0; }
+    .nav { position: fixed; top: 0; left: 0; right: 0; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; z-index: 100; background: rgba(253,250,255,0.88); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(200,168,216,0.18); }
+    .nav-title { font-family: 'Lora', serif; font-size: 1.05rem; font-style: italic; color: var(--ink); }
     .nav-title span { color: var(--lilac-deep); }
-
     .nav-actions { display: flex; gap: 0.6rem; align-items: center; }
-
-    .nav a, .nav button {
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 600;
-      text-decoration: none;
-      padding: 0.45rem 1rem;
-      border-radius: 100px;
-      border: 1px solid rgba(200,168,216,0.35);
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 2px 8px rgba(155,107,175,0.08);
-      transition: all 0.2s;
-      color: var(--ink-soft);
-    }
-
+    .nav a, .nav button { font-family: 'Nunito', sans-serif; font-size: 0.78rem; font-weight: 600; text-decoration: none; padding: 0.45rem 1rem; border-radius: 100px; border: 1px solid rgba(200,168,216,0.35); background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); box-shadow: 0 2px 8px rgba(155,107,175,0.08); transition: all 0.2s; color: var(--ink-soft); }
     .nav a:hover { color: var(--lilac-deep); border-color: var(--lilac-deep); }
-
-    .nav .btn-reset {
-      border-color: rgba(224,90,90,0.25);
-      color: var(--red);
-      background: rgba(255,240,240,0.85);
-    }
-
-    .nav .btn-reset:hover {
-      background: var(--red);
-      color: white;
-      border-color: var(--red);
-    }
-
-    /* Undo bar */
-    .undo-bar {
-      position: fixed;
-      bottom: 1.5rem;
-      left: 50%;
-      transform: translateX(-50%) translateY(120%);
-      background: var(--ink);
-      color: white;
-      border-radius: 100px;
-      padding: 0.75rem 1.25rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      font-size: 0.82rem;
-      font-weight: 600;
-      z-index: 200;
-      box-shadow: 0 8px 32px rgba(28,21,37,0.25);
-      transition: transform 0.35s cubic-bezier(0.34, 1.4, 0.64, 1);
-      white-space: nowrap;
-    }
-    
-    .undo-bar.active { transform: translateX(-50%) translateY(0); }
-
+    .nav .btn-reset { border-color: rgba(224,90,90,0.25); color: var(--red); background: rgba(255,240,240,0.85); }
+    .nav .btn-reset:hover { background: var(--red); color: white; border-color: var(--red); }
+    .undo-bar { display: none; position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: var(--ink); color: white; border-radius: 100px; padding: 0.75rem 1.25rem; align-items: center; gap: 1rem; font-size: 0.82rem; font-weight: 600; z-index: 200; box-shadow: 0 8px 32px rgba(28,21,37,0.25); white-space: nowrap; }
+    .undo-bar.active { display: flex; }
     .undo-bar span { opacity: 0.65; font-weight: 400; }
-
-    .undo-btn {
-      background: var(--lilac-deep);
-      color: white;
-      border: none;
-      border-radius: 100px;
-      padding: 0.35rem 0.9rem;
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 700;
-      transition: background 0.2s;
-    }
-
+    .undo-btn { background: var(--lilac-deep); color: white; border: none; border-radius: 100px; padding: 0.35rem 0.9rem; font-family: 'Nunito', sans-serif; font-size: 0.78rem; font-weight: 700; transition: background 0.2s; }
     .undo-btn:hover { background: #8a5a9e; }
-
-    /* Page */
-    .page {
-      position: relative;
-      z-index: 1;
-      padding: 5.5rem 1.25rem 5rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    /* Header */
-    .gallery-header {
-      text-align: center;
-      margin-bottom: 2.5rem;
-      animation: fadeDown 0.7s ease both;
-    }
-
-    .header-chip {
-      display: inline-block;
-      background: var(--lilac-light);
-      color: var(--lilac-deep);
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      padding: 0.3rem 0.9rem;
-      border-radius: 100px;
-      margin-bottom: 1rem;
-    }
-
-    .gallery-header h1 {
-      font-family: 'Lora', serif;
-      font-size: clamp(2rem, 6vw, 3.5rem);
-      font-weight: 400;
-      font-style: italic;
-      color: var(--ink);
-      line-height: 1.15;
-    }
-
+    .page { position: relative; z-index: 1; padding: 5.5rem 1.25rem 5rem; max-width: 1100px; margin: 0 auto; }
+    .gallery-header { text-align: center; margin-bottom: 2.5rem; animation: fadeDown 0.7s ease both; }
+    .header-chip { display: inline-block; background: var(--lilac-light); color: var(--lilac-deep); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em; padding: 0.3rem 0.9rem; border-radius: 100px; margin-bottom: 1rem; }
+    .gallery-header h1 { font-family: 'Lora', serif; font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 400; font-style: italic; color: var(--ink); line-height: 1.15; }
     .gallery-header h1 span { color: var(--lilac-deep); }
     .gallery-header p { margin-top: 0.6rem; font-size: 0.95rem; color: var(--ink-soft); }
-
-    /* Count */
-    .count {
-      text-align: center;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      color: var(--ink-soft);
-      text-transform: uppercase;
-      margin-bottom: 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-    }
-
-    .live-dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--lilac-deep);
-      animation: dotPulse 2s ease-in-out infinite;
-      flex-shrink: 0;
-    }
-
-    /* Gallery */
+    .count { text-align: center; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em; color: var(--ink-soft); text-transform: uppercase; margin-bottom: 2rem; display: flex; align-items: center; justify-content: center; gap: 0.4rem; }
+    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--lilac-deep); animation: dotPulse 2s ease-in-out infinite; flex-shrink: 0; }
     .gallery { columns: 2; column-gap: 1rem; }
     @media (min-width: 560px) { .gallery { columns: 3; } }
     @media (min-width: 860px) { .gallery { columns: 4; } }
-
-    .cookie-card {
-      break-inside: avoid;
-      margin-bottom: 1rem;
-      background: rgba(255,255,255,0.82);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(200,168,216,0.22);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(155,107,175,0.07);
-      animation: slideIn 0.45s ease both;
-      transition: transform 0.25s, box-shadow 0.25s;
-    }
-
+    .cookie-card { break-inside: avoid; margin-bottom: 1rem; background: rgba(255,255,255,0.82); backdrop-filter: blur(12px); border: 1px solid rgba(200,168,216,0.22); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(155,107,175,0.07); animation: slideIn 0.45s ease both; transition: transform 0.25s, box-shadow 0.25s; }
     .cookie-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(155,107,175,0.13); }
-
     .cookie-card img { width: 100%; display: block; object-fit: cover; aspect-ratio: 1; }
-
     .cookie-info { padding: 0.85rem 0.9rem 1rem; }
-
     .cookie-creator { font-size: 0.7rem; font-weight: 700; color: var(--lilac-deep); margin-bottom: 0.2rem; }
-
-    .cookie-name {
-      font-family: 'Lora', serif;
-      font-size: 0.95rem;
-      font-style: italic;
-      color: var(--ink);
-      line-height: 1.3;
-      margin-bottom: 0.25rem;
-    }
-
+    .cookie-name { font-family: 'Lora', serif; font-size: 0.95rem; font-style: italic; color: var(--ink); line-height: 1.3; margin-bottom: 0.25rem; }
     .cookie-desc { font-size: 0.72rem; color: var(--ink-soft); line-height: 1.5; }
-
-    /* Empty */
     .empty { text-align: center; padding: 5rem 2rem; color: var(--ink-soft); animation: fadeUp 0.7s ease both; }
     .empty-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
     .empty h2 { font-family: 'Lora', serif; font-size: 1.5rem; font-style: italic; font-weight: 400; margin-bottom: 0.5rem; color: var(--ink); }
     .empty p { font-size: 0.9rem; }
-
     .loading { text-align: center; padding: 4rem; font-style: italic; color: var(--ink-soft); }
-
     .petal { position: fixed; pointer-events: none; opacity: 0; z-index: 0; animation: floatPetal linear infinite; }
-
-    @keyframes floatPetal {
-      0% { transform: translateY(105vh) rotate(0deg); opacity: 0; }
-      8% { opacity: 0.25; }
-      92% { opacity: 0.1; }
-      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
-    }
-
+    @keyframes floatPetal { 0% { transform: translateY(105vh) rotate(0deg); opacity: 0; } 8% { opacity: 0.25; } 92% { opacity: 0.1; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
     @keyframes fadeDown { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes slideIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes dotPulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.35; transform: scale(0.75); } }
-
-      .undo-bar { display: none; }
-      .undo-bar.active { display: flex; }
   </style>
 </head>
 <body>
-
   <div class="petal" style="left:5%;animation-duration:21s;animation-delay:0s;font-size:0.9rem">🌸</div>
   <div class="petal" style="left:32%;animation-duration:27s;animation-delay:6s;font-size:0.65rem">✿</div>
   <div class="petal" style="left:63%;animation-duration:18s;animation-delay:11s;font-size:1rem">🌸</div>
   <div class="petal" style="left:84%;animation-duration:23s;animation-delay:4s;font-size:0.75rem">✿</div>
-
   <nav class="nav">
     <span class="nav-title">Cookie <span>Gallery</span></span>
     <div class="nav-actions">
@@ -272,124 +77,88 @@
       <button class="btn-reset" onclick="startNewParty()">New party</button>
     </div>
   </nav>
-
-  <!-- Undo bar -->
   <div class="undo-bar" id="undoBar">
-    <span>Resetting in <strong id="undoCountdown">15</strong>s…</span>
+    <span>Resetting in <strong id="undoCountdown">5</strong>s</span>
     <button class="undo-btn" onclick="cancelReset()">Undo</button>
   </div>
-
   <main class="page">
     <div class="gallery-header">
       <span class="header-chip">🎂 Emma's 28th · Cookie Party</span>
       <h1>Tonight's<br/><span>creations</span></h1>
       <p>Every single one is beautiful.</p>
     </div>
-
     <div class="count" id="cookieCount">
-      <span class="live-dot"></span> Loading…
+      <span class="live-dot"></span> Loading...
     </div>
-
     <div id="galleryContainer">
-      <div class="loading">Gathering the cookies…</div>
+      <div class="loading">Gathering the cookies...</div>
     </div>
   </main>
-
   <script>
-    const SUPABASE_URL = 'https://cedfnjikeywicybdzrws.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlZGZuamlrZXl3aWN5YmR6cndzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMTQ3MTUsImV4cCI6MjA5MDg5MDcxNX0.kgC19HZCtVMegbOuWNUEKmp_eOGtDwvadkuvO8buzZ4';
-    // Service role key — needed for delete. Keep this page private.
-    const SUPABASE_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlZGZuamlrZXl3aWN5YmR6cndzIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTMxNDcxNSwiZXhwIjoyMDkwODkwNzE1fQ.KS3XkY5STLTOTzlGYoCefkElSBIYqB21aTtdH5Win28';
+    var SUPABASE_URL = 'https://cedfnjikeywicybdzrws.supabase.co';
+    var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlZGZuamlrZXl3aWN5YmR6cndzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMTQ3MTUsImV4cCI6MjA5MDg5MDcxNX0.kgC19HZCtVMegbOuWNUEKmp_eOGtDwvadkuvO8buzZ4';
+    var SUPABASE_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlZGZuamlrZXl3aWN5YmR6cndzIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTMxNDcxNSwiZXhwIjoyMDkwODkwNzE1fQ.KS3XkY5STLTOTzlGYoCefkElSBIYqB21aTtdH5Win28';
 
-    let knownIds = new Set();
+    var knownIds = new Set();
 
     function createCard(cookie, delay) {
-      const card = document.createElement('div');
+      var card = document.createElement('div');
       card.className = 'cookie-card';
       card.dataset.id = cookie.id;
-      card.style.animationDelay = `${delay}s`;
-      card.innerHTML = `
-        <img src="${cookie.photo_url}" alt="${cookie.name}" loading="lazy" />
-        <div class="cookie-info">
-          ${cookie.creator_name ? `<p class="cookie-creator">by ${cookie.creator_name}</p>` : ''}
-          <p class="cookie-name">${cookie.name}</p>
-          ${cookie.description ? `<p class="cookie-desc">${cookie.description}</p>` : ''}
-        </div>
-      `;
+      card.style.animationDelay = delay + 's';
+      var creator = cookie.creator_name ? '<p class="cookie-creator">by ' + cookie.creator_name + '</p>' : '';
+      var desc = cookie.description ? '<p class="cookie-desc">' + cookie.description + '</p>' : '';
+      card.innerHTML = '<img src="' + cookie.photo_url + '" alt="' + cookie.name + '" loading="lazy" /><div class="cookie-info">' + creator + '<p class="cookie-name">' + cookie.name + '</p>' + desc + '</div>';
       return card;
     }
 
-    async function fetchCookies() {
-      try {
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/fortune-cookies?select=*&order=created_at.asc`, {
-          headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
-        });
-        const cookies = await res.json();
-        const container = document.getElementById('galleryContainer');
-        const countEl = document.getElementById('cookieCount');
-
+    function fetchCookies() {
+      fetch(SUPABASE_URL + '/rest/v1/fortune-cookies?select=*&order=created_at.asc', {
+        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }
+      })
+      .then(function(res) { return res.json(); })
+      .then(function(cookies) {
+        var container = document.getElementById('galleryContainer');
+        var countEl = document.getElementById('cookieCount');
+        if (!Array.isArray(cookies)) { console.error('Unexpected response:', cookies); return; }
         if (cookies.length === 0 && knownIds.size === 0) {
-          container.innerHTML = `
-            <div class="empty">
-              <span class="empty-icon">🍪</span>
-              <h2>The gallery awaits</h2>
-              <p>Be the first to share your creation.</p>
-            </div>`;
-          countEl.innerHTML = `<span class="live-dot"></span> No cookies yet`;
+          container.innerHTML = '<div class="empty"><span class="empty-icon">🍪</span><h2>The gallery awaits</h2><p>Be the first to share your creation.</p></div>';
+          countEl.innerHTML = '<span class="live-dot"></span> No cookies yet';
           return;
         }
-
         if (knownIds.size === 0) {
           container.innerHTML = '';
-          const gallery = document.createElement('div');
+          var gallery = document.createElement('div');
           gallery.className = 'gallery';
-          cookies.forEach((c, i) => {
-            knownIds.add(c.id);
-            gallery.appendChild(createCard(c, i * 0.06));
-          });
+          cookies.forEach(function(c, i) { knownIds.add(c.id); gallery.appendChild(createCard(c, i * 0.06)); });
           container.appendChild(gallery);
         } else {
-          let gallery = container.querySelector('.gallery');
-          if (!gallery) {
-            container.innerHTML = '';
-            gallery = document.createElement('div');
-            gallery.className = 'gallery';
-            container.appendChild(gallery);
-          }
-          cookies.forEach(c => {
-            if (!knownIds.has(c.id)) {
-              knownIds.add(c.id);
-              gallery.appendChild(createCard(c, 0));
-            }
-          });
+          var gallery = container.querySelector('.gallery');
+          if (!gallery) { container.innerHTML = ''; gallery = document.createElement('div'); gallery.className = 'gallery'; container.appendChild(gallery); }
+          cookies.forEach(function(c) { if (!knownIds.has(c.id)) { knownIds.add(c.id); gallery.appendChild(createCard(c, 0)); } });
         }
-
-        const n = cookies.length;
-        countEl.innerHTML = `<span class="live-dot"></span> ${n} cookie${n !== 1 ? 's' : ''} in the gallery`;
-      } catch(err) { console.error(err); }
+        var n = cookies.length;
+        countEl.innerHTML = '<span class="live-dot"></span> ' + n + ' cookie' + (n !== 1 ? 's' : '') + ' in the gallery';
+      })
+      .catch(function(err) { console.error(err); });
     }
 
-    // ── New party / reset ──
-    let undoTimer = null;
-    let undoSeconds = 5;
-    let pendingReset = false;
+    var undoTimer = null;
+    var undoSeconds = 5;
+    var pendingReset = false;
 
     function startNewParty() {
       if (pendingReset) return;
       pendingReset = true;
       undoSeconds = 5;
-      const bar = document.getElementById('undoBar');
-      const countdown = document.getElementById('undoCountdown');
+      var bar = document.getElementById('undoBar');
+      var countdown = document.getElementById('undoCountdown');
       bar.classList.add('active');
       countdown.textContent = undoSeconds;
-
-      undoTimer = setInterval(() => {
+      undoTimer = setInterval(function() {
         undoSeconds--;
         countdown.textContent = undoSeconds;
-        if (undoSeconds <= 0) {
-          clearInterval(undoTimer);
-          executeReset();
-        }
+        if (undoSeconds <= 0) { clearInterval(undoTimer); executeReset(); }
       }, 1000);
     }
 
@@ -399,26 +168,19 @@
       document.getElementById('undoBar').classList.remove('active');
     }
 
-    async function executeReset() {
+    function executeReset() {
       document.getElementById('undoBar').classList.remove('active');
       pendingReset = false;
-      try {
-        await fetch(`${SUPABASE_URL}/rest/v1/fortune-cookies?id=gt.0`, {
-          method: 'DELETE',
-          headers: {
-            'apikey': SUPABASE_SERVICE_KEY,
-            'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`
-          }
-        });
+      fetch(SUPABASE_URL + '/rest/v1/fortune-cookies?id=gt.0', {
+        method: 'DELETE',
+        headers: { 'apikey': SUPABASE_SERVICE_KEY, 'Authorization': 'Bearer ' + SUPABASE_SERVICE_KEY }
+      })
+      .then(function() {
         knownIds.clear();
-        document.getElementById('galleryContainer').innerHTML = `
-          <div class="empty">
-            <span class="empty-icon">🍪</span>
-            <h2>The gallery awaits</h2>
-            <p>Be the first to share your creation.</p>
-          </div>`;
-        document.getElementById('cookieCount').innerHTML = `<span class="live-dot"></span> No cookies yet`;
-      } catch(e) { console.error(e); }
+        document.getElementById('galleryContainer').innerHTML = '<div class="empty"><span class="empty-icon">🍪</span><h2>The gallery awaits</h2><p>Be the first to share your creation.</p></div>';
+        document.getElementById('cookieCount').innerHTML = '<span class="live-dot"></span> No cookies yet';
+      })
+      .catch(function(e) { console.error(e); });
     }
 
     fetchCookies();
