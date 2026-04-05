@@ -7,6 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600&family=Lora:ital,wght@0,400;1,400;1,500&display=swap" rel="stylesheet" />
   <style>
+    .undo-bar { display: none; }
+    .undo-bar.active { display: flex; }
     :root {
       --lilac: #c8a8d8;
       --lilac-light: #ede0f7;
@@ -368,13 +370,13 @@
 
     // ── New party / reset ──
     let undoTimer = null;
-    let undoSeconds = 15;
+    let undoSeconds = 5;
     let pendingReset = false;
 
     function startNewParty() {
       if (pendingReset) return;
       pendingReset = true;
-      undoSeconds = 15;
+      undoSeconds = 5;
       const bar = document.getElementById('undoBar');
       const countdown = document.getElementById('undoCountdown');
       bar.classList.add('active');
