@@ -38,7 +38,7 @@
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlZGZuamlrZXl3aWN5YmR6cndzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMTQ3MTUsImV4cCI6MjA5MDg5MDcxNX0.kgC19HZCtVMegbOuWNUEKmp_eOGtDwvadkuvO8buzZ4';
 
     let photoDataUrl = null;
-
+    <input id="photoInput" type="file">
     document.getElementById('photoInput').addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (!file) return;
