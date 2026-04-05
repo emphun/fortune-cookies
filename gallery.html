@@ -322,16 +322,22 @@
     async function fetchCookies() {
       try {
         const res = await fetch(`${SUPABASE_URL}/rest/v1/fortune-cookies?select=*&order=created_at.asc`, {
-          headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+          }
         });
+    
         const text = await res.text();
+        console.log("STATUS:", res.status);
         console.log("SUPABASE RESPONSE:", text);
-        
+    
         const cookies = JSON.parse(text);
+    
         const container = document.getElementById('galleryContainer');
         const countEl = document.getElementById('cookieCount');
-
-        if (cookies.length === 0 && knownIds.size === 0) {
+    
+        if (cookies.length === 0) {
           container.innerHTML = `
             <div class="empty">
               <span class="empty-icon">🍪</span>
@@ -341,35 +347,30 @@
           countEl.innerHTML = `<span class="live-dot"></span> No cookies yet`;
           return;
         }
-
-        if (knownIds.size === 0) {
-          container.innerHTML = '';
-          const gallery = document.createElement('div');
-          gallery.className = 'gallery';
-          cookies.forEach((c, i) => {
-            knownIds.add(c.id);
-            gallery.appendChild(createCard(c, i * 0.06));
-          });
-          container.appendChild(gallery);
-        } else {
-          let gallery = container.querySelector('.gallery');
-          if (!gallery) {
-            container.innerHTML = '';
-            gallery = document.createElement('div');
-            gallery.className = 'gallery';
-            container.appendChild(gallery);
-          }
-          cookies.forEach(c => {
-            if (!knownIds.has(c.id)) {
-              knownIds.add(c.id);
-              gallery.appendChild(createCard(c, 0));
-            }
-          });
-        }
-
-        const n = cookies.length;
-        countEl.innerHTML = `<span class="live-dot"></span> ${n} cookie${n !== 1 ? 's' : ''} in the gallery`;
-      } catch(err) { console.error(err); }
+    
+        const gallery = document.createElement('div');
+        gallery.className = 'gallery';
+    
+        cookies.forEach((c) => {
+          const card = document.createElement('div');
+          card.className = 'cookie-card';
+          card.innerHTML = `
+            <img src="${c.photo_url}" />
+            <div class="cookie-info">
+              <p class="cookie-name">${c.name}</p>
+            </div>
+          `;
+          gallery.appendChild(card);
+        });
+    
+        container.innerHTML = '';
+        container.appendChild(gallery);
+    
+        countEl.innerHTML = `<span class="live-dot"></span> ${cookies.length} cookies`;
+    
+      } catch (err) {
+        console.error("FETCH ERROR:", err);
+      }
     }
 
     // ── New party / reset ──
