@@ -517,7 +517,7 @@
       try {
         const compressedPhoto = await compressImage(photoDataUrl);
         const photoUrl = await uploadToStorage(compressedPhoto);
-        await fetch(`${SUPABASE_URL}/rest/v1/cookies`, {
+        await fetch(`${SUPABASE_URL}/rest/v1/fortune-cookies`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -525,7 +525,7 @@
             'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
             'Prefer': 'return=minimal'
           },
-          body: JSON.stringify({ creator_name: creatorName, name, description: desc || null, photo_url: photoUrl, cookies: fortune, created_at: new Date().toISOString() })
+          body: JSON.stringify({ creator_name: creatorName, name, description: desc || null, photo_url: photoUrl, fortune: fortune, created_at: new Date().toISOString() })
         });
       } catch(e) { console.error(e); }
 
