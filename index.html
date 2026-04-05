@@ -484,25 +484,7 @@
         img.src = dataUrl;
       });
     }
-
-    async function uploadToStorage(dataUrl) {
-      const res = await fetch(dataUrl);
-      const blob = await res.blob();
-      const filename = `cookie-${Date.now()}.jpg`;
-      const storageRes = await fetch(`${SUPABASE_URL}/storage/v1/object/cookie-photos/${filename}`, {
-        method: 'POST',
-        headers: {
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Content-Type': 'image/jpeg',
-          'x-upsert': 'true'
-        },
-        body: blob
-      });
-      if (!storageRes.ok) throw new Error('Storage upload failed');
-      return `${SUPABASE_URL}/storage/v1/object/public/cookie-photos/${filename}`;
-    }
-
+    
     async function submitCookie() {
       const creatorName = document.getElementById('creatorName').value.trim();
       const name = document.getElementById('cookieName').value.trim();
@@ -516,7 +498,6 @@
 
       try {
         const compressedPhoto = await compressImage(photoDataUrl);
-        const photoUrl = await uploadToStorage(compressedPhoto);
         await fetch(`${SUPABASE_URL}/rest/v1/fortune-cookies`, {
           method: 'POST',
           headers: {
@@ -525,7 +506,7 @@
             'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
             'Prefer': 'return=minimal'
           },
-          body: JSON.stringify({ creator_name: creatorName, name, description: desc || null, photo_url: photoUrl, fortune, created_at: new Date().toISOString() })
+          body: JSON.stringify({ creator_name: creatorName, name, description: desc || null, photo_url: compressedPhoto, fortune, created_at: new Date().toISOString() })
         });
       } catch(e) { console.error(e); }
 
