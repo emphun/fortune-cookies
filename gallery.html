@@ -45,13 +45,28 @@
     .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     @media (min-width: 560px) { .gallery { grid-template-columns: repeat(3, 1fr); } }
     @media (min-width: 860px) { .gallery { grid-template-columns: repeat(4, 1fr); } }
-    .cookie-card { break-inside: avoid; margin-bottom: 1rem; background: rgba(255,255,255,0.82); backdrop-filter: blur(12px); border: 1px solid rgba(200,168,216,0.22); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(155,107,175,0.07); animation: slideIn 0.45s ease both; transition: transform 0.25s, box-shadow 0.25s; }
+    .cookie-card { background: rgba(255,255,255,0.82); backdrop-filter: blur(12px); border: 1px solid rgba(200,168,216,0.22); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(155,107,175,0.07); animation: slideIn 0.45s ease both; transition: transform 0.25s, box-shadow 0.25s; }
     .cookie-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(155,107,175,0.13); }
     .cookie-card img { width: 100%; display: block; object-fit: cover; aspect-ratio: 1; }
     .cookie-info { padding: 0.85rem 0.9rem 1rem; }
     .cookie-creator { font-size: 0.7rem; font-weight: 700; color: var(--lilac-deep); margin-bottom: 0.2rem; }
     .cookie-name { font-family: 'Lora', serif; font-size: 0.95rem; font-style: italic; color: var(--ink); line-height: 1.3; margin-bottom: 0.25rem; }
-    .cookie-desc { font-size: 0.72rem; color: var(--ink-soft); line-height: 1.5; }
+    .cookie-desc { font-size: 0.72rem; color: var(--ink-soft); line-height: 1.5; margin-bottom: 0.5rem; }
+    .view-fortune-btn { font-family: 'Nunito', sans-serif; font-size: 0.68rem; font-weight: 700; color: var(--lilac-deep); background: var(--lilac-pale); border: none; border-radius: 100px; padding: 0.28rem 0.7rem; transition: background 0.2s; }
+    .view-fortune-btn:hover { background: var(--lilac-light); }
+
+    /* Fortune peek modal */
+    .fortune-peek-overlay { position: fixed; inset: 0; background: rgba(28,21,37,0.45); backdrop-filter: blur(6px); z-index: 300; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; pointer-events: none; transition: opacity 0.25s ease; }
+    .fortune-peek-overlay.active { opacity: 1; pointer-events: all; }
+    .fortune-peek { background: white; border-radius: 24px; padding: 2.5rem 2rem 2rem; max-width: 340px; width: 100%; text-align: center; box-shadow: 0 24px 60px rgba(28,21,37,0.2), 0 0 0 1px rgba(200,168,216,0.15); transform: translateY(16px); transition: transform 0.3s cubic-bezier(0.34, 1.4, 0.64, 1); }
+    .fortune-peek-overlay.active .fortune-peek { transform: translateY(0); }
+    .peek-eyebrow { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lilac-deep); margin-bottom: 0.3rem; }
+    .peek-name { font-family: 'Lora', serif; font-size: 0.95rem; font-style: italic; color: var(--ink-soft); margin-bottom: 1.25rem; }
+    .peek-divider { width: 32px; height: 1px; background: var(--lilac); margin: 0 auto 1.25rem; }
+    .peek-fortune { font-family: 'Lora', serif; font-size: 1.2rem; font-style: italic; line-height: 1.6; color: var(--ink); margin-bottom: 1.75rem; }
+    .peek-close { font-family: 'Nunito', sans-serif; font-size: 0.75rem; font-weight: 600; color: var(--ink-soft); background: var(--lilac-pale); border: none; border-radius: 100px; padding: 0.5rem 1.25rem; transition: background 0.2s, color 0.2s; }
+    .peek-close:hover { background: var(--lilac-light); color: var(--lilac-deep); }
+
     .empty { text-align: center; padding: 5rem 2rem; color: var(--ink-soft); animation: fadeUp 0.7s ease both; }
     .empty-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
     .empty h2 { font-family: 'Lora', serif; font-size: 1.5rem; font-style: italic; font-weight: 400; margin-bottom: 0.5rem; color: var(--ink); }
@@ -70,6 +85,7 @@
   <div class="petal" style="left:32%;animation-duration:27s;animation-delay:6s;font-size:0.65rem">✿</div>
   <div class="petal" style="left:63%;animation-duration:18s;animation-delay:11s;font-size:1rem">🌸</div>
   <div class="petal" style="left:84%;animation-duration:23s;animation-delay:4s;font-size:0.75rem">✿</div>
+
   <nav class="nav">
     <span class="nav-title">Cookie <span>Gallery</span></span>
     <div class="nav-actions">
@@ -77,13 +93,26 @@
       <button class="btn-reset" onclick="startNewParty()">New party</button>
     </div>
   </nav>
+
   <div class="undo-bar" id="undoBar">
     <span>Resetting in <strong id="undoCountdown">5</strong>s</span>
     <button class="undo-btn" onclick="cancelReset()">Undo</button>
   </div>
+
+  <!-- Fortune peek modal -->
+  <div class="fortune-peek-overlay" id="fortunePeekOverlay" onclick="closePeek(event)">
+    <div class="fortune-peek">
+      <p class="peek-eyebrow" id="peekCreator"></p>
+      <p class="peek-name" id="peekName"></p>
+      <div class="peek-divider"></div>
+      <p class="peek-fortune" id="peekFortune"></p>
+      <button class="peek-close" onclick="closePeekBtn()">Close</button>
+    </div>
+  </div>
+
   <main class="page">
     <div class="gallery-header">
-      <span class="header-chip">🎂 Emma's 28th · Cookie Party</span>
+      <span class="header-chip">🎂 Lanze's 28th · Cookie Party</span>
       <h1>Tonight's<br/><span>cookie creations</span></h1>
       <p>welcome to our cookie capsule</p>
     </div>
@@ -94,6 +123,7 @@
       <div class="loading">Gathering the cookies...</div>
     </div>
   </main>
+
   <script>
     var SUPABASE_URL = 'https://cedfnjikeywicybdzrws.supabase.co';
     var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlZGZuamlrZXl3aWN5YmR6cndzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMTQ3MTUsImV4cCI6MjA5MDg5MDcxNX0.kgC19HZCtVMegbOuWNUEKmp_eOGtDwvadkuvO8buzZ4';
@@ -101,14 +131,41 @@
 
     var knownIds = new Set();
 
+    function openPeek(creatorName, cookieName, fortune) {
+      document.getElementById('peekCreator').textContent = creatorName ? 'by ' + creatorName : '';
+      document.getElementById('peekName').textContent = cookieName;
+      document.getElementById('peekFortune').textContent = fortune || '';
+      document.getElementById('fortunePeekOverlay').classList.add('active');
+    }
+
+    function closePeek(e) {
+      if (e.target === document.getElementById('fortunePeekOverlay')) {
+        document.getElementById('fortunePeekOverlay').classList.remove('active');
+      }
+    }
+
+    function closePeekBtn() {
+      document.getElementById('fortunePeekOverlay').classList.remove('active');
+    }
+
     function createCard(cookie, delay) {
       var card = document.createElement('div');
       card.className = 'cookie-card';
       card.dataset.id = cookie.id;
       card.style.animationDelay = delay + 's';
-      var creator = cookie.creator_name ? '<p class="cookie-creator">by ' + cookie.creator_name + '</p>' : '';
+      var creatorName = cookie.creator_name || '';
+      var creatorHtml = creatorName ? '<p class="cookie-creator">by ' + creatorName + '</p>' : '';
       var desc = cookie.description ? '<p class="cookie-desc">' + cookie.description + '</p>' : '';
-      card.innerHTML = '<img src="' + cookie.photo_url + '" alt="' + cookie.name + '" loading="lazy" /><div class="cookie-info">' + creator + '<p class="cookie-name">' + cookie.name + '</p>' + desc + '</div>';
+      card.innerHTML = '<img src="' + cookie.photo_url + '" alt="' + cookie.name + '" loading="lazy" />'
+        + '<div class="cookie-info">'
+        + creatorHtml
+        + '<p class="cookie-name">' + cookie.name + '</p>'
+        + desc
+        + '<button class="view-fortune-btn">✦ View fortune</button>'
+        + '</div>';
+      card.querySelector('.view-fortune-btn').addEventListener('click', function() {
+        openPeek(creatorName, cookie.name, cookie.fortune);
+      });
       return card;
     }
 
